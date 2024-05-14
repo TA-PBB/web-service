@@ -21,7 +21,7 @@ from Task.models import Task
 from Task.views import TaskViewSet
 
 router = routers.DefaultRouter()
-router.register('task/', TaskViewSet)
+router.register('task', TaskViewSet)
 
 urlpatterns = [
     path('api-task/', include(router.urls)),
