@@ -21,15 +21,15 @@ class TaskItemViewSet(viewsets.ModelViewSet):
     queryset = TaskItem.objects.all()
     serializer_class = TaskItemSerializer
     permission_classes = [IsAuthenticated]
-    
+
 @api_view(['POST'])
 def register(request):
     username = request.data.get('username')
     password = request.data.get('password')
     if username is None or password is None:
-        return Response({'error': 'Please provide both username and password'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Harap berikan username dan password'}, status=status.HTTP_400_BAD_REQUEST)
     if User.objects.filter(username=username).exists():
-        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Username sudah ada'}, status=status.HTTP_400_BAD_REQUEST)
     user = User.objects.create_user(username=username, password=password)
     token, created = Token.objects.get_or_create(user=user)
     return Response({'token': token.key}, status=status.HTTP_201_CREATED)
@@ -38,5 +38,4 @@ class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
-        return Response({'token': token.key})    
-
+        return Response({'token': token.key})
