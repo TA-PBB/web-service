@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-!)vcjyck4fbbg!t1uw*(zdy^9jgv0-nuhv29n-b2((r=g-vhpz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'web-service-production-ec0e.up.railway.app',
+]
 
 
 # Application definition
@@ -47,6 +49,7 @@ AUTH_USER_MODEL = 'User.CustomUser'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -90,10 +93,21 @@ WSGI_APPLICATION = 'TaskMasterService.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': 'pdOSnVCGvfyAavoOYcogMFPfbNWzcmLL',
+        'HOST': 'roundhouse.proxy.rlwy.net', 
+        'PORT': '38774',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
