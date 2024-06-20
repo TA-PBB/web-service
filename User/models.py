@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class CustomUser(AbstractUser):
-    username = models.TextField( unique=True)
+    username = models.TextField(max_length=20, unique=True)
     password = models.TextField(max_length=8)
 
     # Add custom fields here, if needed
