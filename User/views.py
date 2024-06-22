@@ -143,3 +143,18 @@ def task_item_detail(request, task_id, pk):
     elif request.method == 'DELETE':
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def task_search(request):
+    search_query = request.query_params.get('search', '')
+
+    tasks = Task.objects.filter(user=request.user)
+
+    if search_query:
+        tasks = tasks.filter(title__icontains=search_query)
+
+    serializer = TaskSerializer(tasks, many=True)
+    return Response(serializer.data)
+

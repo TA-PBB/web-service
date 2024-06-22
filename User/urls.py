@@ -10,4 +10,5 @@ urlpatterns = [
     path('tasks/<int:pk>/', task_detail, name='task-detail'),
     path('tasks/<int:task_id>/items/', task_item_list, name='task-item-list'),
     path('tasks/<int:task_id>/items/<int:pk>/', task_item_detail, name='task-item-detail'),
+    path('tasks/search/', task_search, name='task-search'),
 ]
