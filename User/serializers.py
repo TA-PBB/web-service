@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-    
+
 class TaskItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskItem
@@ -33,3 +33,8 @@ class TaskSerializer(serializers.ModelSerializer):
         for item_data in items_data:
             TaskItem.objects.create(task=task, **item_data)
         return task
+
+    def validate_title(self, value):
+        if not value:
+            raise serializers.ValidationError("The task title must not be empty.")
+        return value

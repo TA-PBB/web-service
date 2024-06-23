@@ -68,6 +68,11 @@ def task_list(request):
         return Response(serializer.data)
     elif request.method == 'POST':
         logger.info(f"Incoming data: {request.data}")
+        
+        # Additional validation for title
+        if not request.data.get('title'):
+            return Response({'error': 'The task title must not be empty.'}, status=status.HTTP_400_BAD_REQUEST)
+        
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             try:
@@ -80,6 +85,7 @@ def task_list(request):
         else:
             logger.error(f"Serializer errors: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
